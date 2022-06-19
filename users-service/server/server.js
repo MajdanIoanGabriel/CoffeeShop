@@ -16,7 +16,8 @@ module.exports.start = (options) => {
     app.use(morgan('dev'));
 
     //  Add the APIs to the app.
-    require('../api/users')(app, options);
+    require('../services/users')(app, options);
+    require('../services/search')(app, options);
 
     //  Start the app, creating a running server which we return.
     var server = app.listen(options.port, () => {
