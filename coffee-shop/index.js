@@ -19,11 +19,11 @@ process.on('unhandledRejection', function(err, promise){
 });
 
 repository.connect({
-  host: config.db.host,
-  database: config.db.database,
-  user: config.db.user,
-  password: config.db.password,
-  port: config.db.port
+  host: config.coffee_menu_db.host,
+  database: config.coffee_menu_db.database,
+  user: config.coffee_menu_db.user,
+  password: config.coffee_menu_db.password,
+  port: config.coffee_menu_db.port
 }).then((repo) => {
   console.log("Connected. Starting server...");
 

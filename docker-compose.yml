@@ -1,15 +1,15 @@
 version: '2'
 services:
-  users-service:
-    build: ./users-service
-    container_name: users_service
+  coffee-shop:
+    build: ./coffee-shop
+    container_name: coffee-shop
     ports:
      - "8080:8080"
     links:
-      - db:db
+     - coffee_menu_db:coffee_menu_db
     depends_on:
-     - db
+     - coffee_menu_db
     environment:
-     - DATABASE_HOST=db
-  db:
-    build: ./test-database
+     - DATABASE_HOST=coffee_menu_db
+  coffee_menu_db:
+    build: ./coffee_menu_db

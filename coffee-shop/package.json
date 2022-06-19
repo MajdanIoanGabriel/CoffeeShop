@@ -1,5 +1,5 @@
 {
-  "name": "users-service",
+  "name": "coffee-shop",
   "version": "1.0.0",
   "description": "Basic service for retrieving user information from the directory.",
   "main": "index.js",
