@@ -14,12 +14,12 @@ class Repository {
     this.connection = mysql.createConnection(this.connectionSettings);
   }
 
-  getCoffeeList() {
+  getCoffeeCart() {
     return new Promise((resolve, reject) => {
 
-      this.connection.query('SELECT coffee_name, coffee_description, category, price FROM directory', (err, results) => {
+      this.connection.query('SELECT coffee_name, coffee_description, category, price, quantity FROM coffeecart WHERE quantity > 0', (err, results) => {
         if(err) {
-          return reject(new Error('An error occured getting the coffees: ' + err));
+          return reject(new Error('An error occured getting the coffee cart: ' + err));
         }
 
         resolve((results || []).map((coffee) => {
@@ -27,7 +27,8 @@ class Repository {
             coffee_name: coffee.coffee_name, 
             coffee_description: coffee.coffee_description,
             category: coffee.category, 
-            price: coffee.price
+            price: coffee.price,
+            quantity: coffee.quantity
           };
         }));
       });
@@ -35,34 +36,21 @@ class Repository {
     });
   }
 
-  getCoffeeByName(name) {
+  addToCart(name, quantity) {
 
     return new Promise((resolve, reject) => {
 
       //  Fetch the coffee.
-      this.connection.query('SELECT coffee_name, coffee_description, category, price FROM directory WHERE coffee_name = ?', [name], (err, results) => {
+      this.connection.query('UPDATE coffeecart SET quantity = quantity + ? WHERE coffee_name = ?', [quantity, name], (err, results) => {
 
         if(err) {
-          return reject(new Error('An error occured getting the user: ' + err));
+          return reject(new Error('An error occured adding to cart: ' + err));
         }
 
         if(results.length === 0) {
           resolve(undefined);
         } else {
-          resolve({
-            coffee_name: results[0].coffee_name, 
-            coffee_description: results[0].coffee_description,
-            category: results[0].category, 
-            price: results[0].price
-          });
-          // resolve(results.map((coffee) => {
-          //   return {
-          //     coffee_name: coffee.coffee_name, 
-          //     coffee_description: coffee.coffee_description,
-          //     category: coffee.category, 
-          //     price: coffee.price
-          //   };
-          // }));
+          resolve(results);
         }
 
       });

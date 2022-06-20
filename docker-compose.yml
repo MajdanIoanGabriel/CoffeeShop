@@ -1,8 +1,8 @@
 version: '2'
 services:
-  coffee-shop:
-    build: ./coffee-shop
-    container_name: coffee-shop
+  coffee_shop:
+    build: ./coffee_shop
+    container_name: coffee_shop
     ports:
      - "8080:8080"
     links:
@@ -13,3 +13,17 @@ services:
      - DATABASE_HOST=coffee_menu_db
   coffee_menu_db:
     build: ./coffee_menu_db
+
+  coffee_order:
+    build: ./coffee_order
+    container_name: coffee_order
+    ports:
+     - "8081:8081"
+    links:
+     - coffee_cart_db:coffee_cart_db
+    depends_on:
+     - coffee_cart_db
+    environment:
+     - DATABASE_HOST=coffee_cart_db
+  coffee_cart_db:
+    build: ./coffee_cart_db
