@@ -1,6 +1,7 @@
 version: '2'
 services:
   coffee_shop:
+    image: majdangabriel/coffee_shop
     build: ./coffee_shop
     container_name: coffee_shop
     ports:
@@ -12,9 +13,11 @@ services:
     environment:
      - DATABASE_HOST=coffee_menu_db
   coffee_menu_db:
+    image: majdangabriel/coffee_menu_db
     build: ./coffee_menu_db
 
   coffee_order:
+    image: majdangabriel/coffee_order
     build: ./coffee_order
     container_name: coffee_order
     ports:
@@ -26,4 +29,5 @@ services:
     environment:
      - DATABASE_HOST=coffee_cart_db
   coffee_cart_db:
+    image: majdangabriel/coffee_cart_db
     build: ./coffee_cart_db
