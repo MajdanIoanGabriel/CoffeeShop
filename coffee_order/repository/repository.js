@@ -41,7 +41,7 @@ class Repository {
     return new Promise((resolve, reject) => {
 
       //  Fetch the coffee.
-      this.connection.query('UPDATE coffeecart SET quantity = quantity + ? WHERE coffee_name = ?', [quantity, name], (err, results) => {
+      this.connection.query('UPDATE coffeecart SET quantity = CASE WHEN quantity + ? > 0 THEN quantity + ? ELSE 0 END WHERE coffee_name = ?', [quantity, quantity, name], (err, results) => {
 
         if(err) {
           return reject(new Error('An error occured adding to cart: ' + err));
