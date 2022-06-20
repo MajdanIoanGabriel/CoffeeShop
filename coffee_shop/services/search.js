@@ -18,12 +18,11 @@ app.get('/search', (req, res, next) => {
       if(!coffee) { 
         res.status(404).send('Coffee not found.');
       } else {
-        res.status(200).send({
-          coffee_name: coffee.coffee_name, 
-          coffee_description: coffee.coffee_description,
-          category: coffee.category, 
-          price: coffee.price
-        });
+        var result = '<ul><li>';
+        result +=  coffee.coffee_name + ' - ' + coffee.price + '<br>' + coffee.category + '<br>' + coffee.coffee_description;
+        result += '</ul></li>'
+
+        res.status(200).send(result);
       }
     })
     .catch(next);

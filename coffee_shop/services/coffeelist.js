@@ -9,13 +9,22 @@ module.exports = (app, options) => {
 
   app.get('/coffeelist', (req, res, next) => {
     options.repository.getCoffeeList().then((coffelist) => {
-      res.status(200).send(coffelist.map((coffee) => { return {
-        coffee_name: coffee.coffee_name, 
-        coffee_description: coffee.coffee_description,
-        category: coffee.category, 
-        price: coffee.price
-        };
-      }));
+      var category = coffelist[0].category;
+      var result = category + '\n<ol>'
+
+      for(const coffee of coffelist) {
+        if(!(category === coffee.category)) {
+          category = coffee.category;
+          result += '</ol><p>' + category + '</p><ol>';
+        }
+
+        result += '<li>'
+        result +=  coffee.coffee_name + ' - ' + coffee.price + '<br>' + coffee.coffee_description;
+        result += '</li>'
+      }
+      result += '</ol>'
+
+      res.status(200).send(result);
     })
     .catch(next);
   });

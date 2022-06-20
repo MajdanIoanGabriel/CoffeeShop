@@ -8,15 +8,33 @@
 module.exports = (app, options) => {
 
   app.get('/coffeecart', (req, res, next) => {
-    options.repository.getCoffeeCart().then((coffelist) => {
-      res.status(200).send(coffelist.map((coffee) => { return {
-        coffee_name: coffee.coffee_name, 
-        coffee_description: coffee.coffee_description,
-        category: coffee.category, 
-        price: coffee.price,
-        quantity: coffee.quantity
-        };
-      }));
+    options.repository.getCoffeeCart().then((coffeecart) => {
+      
+      if (coffeecart.length === 0) {
+        res.status(200).send('Coffee cart is empty.');
+      }
+      else {
+        var category = coffeecart[0].category;
+        var result = category + '\n<ol>'
+
+        for(const coffee of coffeecart) {
+          if(!(category === coffee.category)) {
+            category = coffee.category;
+            result += '</ol><p>' + category + '</p><ol>';
+          }
+
+          result += '<li>'
+          result +=  coffee.coffee_name + ' - ' + coffee.price;
+          if(!(coffee.coffee_description === "")) {
+            result +=  '<br>' + coffee.coffee_description;
+          }
+          result +=  '<br>Quantity: ' + coffee.quantity;
+          result += '</li>'
+        }
+        result += '</ol>'
+
+        res.status(200).send(result);
+      }
     })
     .catch(next);
   });
