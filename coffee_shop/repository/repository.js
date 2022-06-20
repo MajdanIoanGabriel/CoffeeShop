@@ -55,14 +55,6 @@ class Repository {
             category: results[0].category, 
             price: results[0].price
           });
-          // resolve(results.map((coffee) => {
-          //   return {
-          //     coffee_name: coffee.coffee_name, 
-          //     coffee_description: coffee.coffee_description,
-          //     category: coffee.category, 
-          //     price: coffee.price
-          //   };
-          // }));
         }
 
       });
