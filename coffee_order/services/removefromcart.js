@@ -8,7 +8,6 @@
 module.exports = (app, options) => {
 app.get('/removefromcart', (req, res, next) => {
 
-    //  Get the name.
     var name = req.query.name;
     var quantity = -(req.query.q || 1);
 
@@ -16,7 +15,6 @@ app.get('/removefromcart', (req, res, next) => {
       throw new Error("When searching for a coffee, the name must be specified, e.g: '/removefromcart?name=Espresso'.");
     }
 
-    //  Get the user from the repo.
     options.repository.addToCart(name, quantity).then((coffee) => {
 
       if(!coffee) { 

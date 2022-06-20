@@ -8,13 +8,11 @@
 module.exports = (app, options) => {
 app.get('/search', (req, res, next) => {
 
-    //  Get the name.
     var name = req.query.name;
     if (!name) {
       throw new Error("When searching for a coffee, the name must be specified, e.g: '/search?name=Espresso'.");
     }
 
-    //  Get the user from the repo.
     options.repository.getCoffeeByName(name).then((coffee) => {
 
       if(!coffee) { 

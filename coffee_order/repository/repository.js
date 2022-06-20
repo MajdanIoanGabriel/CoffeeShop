@@ -27,7 +27,7 @@ class Repository {
             coffee_name: coffee.coffee_name, 
             coffee_description: coffee.coffee_description,
             category: coffee.category, 
-            price: coffee.price,
+            price: '$' + coffee.price,
             quantity: coffee.quantity
           };
         }));
@@ -44,7 +44,12 @@ class Repository {
       this.connection.query('UPDATE coffeecart SET quantity = CASE WHEN quantity + ? > 0 THEN quantity + ? ELSE 0 END WHERE coffee_name = ?', [quantity, quantity, name], (err, results) => {
 
         if(err) {
-          return reject(new Error('An error occured adding to cart: ' + err));
+          if(quantity > 0) {
+            return reject(new Error('An error occured adding to the cart: ' + err));
+          }
+          else {
+            return reject(new Error('An error occured removing from the cart: ' + err));
+          }
         }
 
         if(results.length === 0) {
@@ -53,6 +58,23 @@ class Repository {
           resolve(results);
         }
 
+      });
+
+    });
+  }
+
+  getTotalPrice() {
+
+    return new Promise((resolve, reject) => {
+
+      //  Fetch the total price.
+      this.connection.query('SELECT CAST(SUM(price*quantity) AS DECIMAL(10,2)) AS total_price FROM coffeecart WHERE quantity > 0', (err, result) => {
+
+        if(err) {
+          return reject(new Error('An error occured getting the price: ' + err));
+        }
+
+        resolve(result[0].total_price || 0);
       });
 
     });

@@ -19,6 +19,7 @@ module.exports.start = (options) => {
     require('../services/coffeecart')(app, options);
     require('../services/addtocart')(app, options);
     require('../services/removefromcart')(app, options);
+    require('../services/totalprice')(app, options);
 
     //  Start the app, creating a running server which we return.
     var server = app.listen(options.port, () => {
