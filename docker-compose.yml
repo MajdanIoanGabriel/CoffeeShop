@@ -1,5 +1,12 @@
 version: '2'
 services:
+  coffee_shop:
+    image: majdangabriel/coffee_shop
+    build: ./coffee_shop
+    container_name: coffee_shop
+    ports:
+     - "80:80"
+
   coffee_menu:
     image: majdangabriel/coffee_menu
     build: ./coffee_menu
