@@ -26,7 +26,7 @@ module.exports.start = (options) => {
       <li>/coffeecart - see all coffees in the cart</li> \
       <li>/addtocart - add a coffee in the cart</li> \
       <li>/removefromcart - remove a coffee from the cart</li> \
-      <li>/totalprice - see total price of the cart</li></ol>"
+      <li>/totalprice - see total price of the cart</li></ul>";
 
       res.status(200).send(result);
     });

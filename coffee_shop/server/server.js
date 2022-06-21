@@ -22,7 +22,7 @@ module.exports.start = (options) => {
     app.get('/', (req, res, next) => {
       var result = "Welcome to the coffee shop. Here you can go to:<ul> \
       <li>/menu - see the coffee menu</li> \
-      <li>/order - order some coffee</li>"
+      <li>/order - order some coffee</li></ul>";
 
       res.status(200).send(result);
     });

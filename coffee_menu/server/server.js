@@ -22,7 +22,7 @@ module.exports.start = (options) => {
     app.get('/', (req, res, next) => {
       var result = "Welcome to the menu section. Here you can go to:<ul> \
       <li>/coffeelist - see all coffees in the menu</li> \
-      <li>/search - search for a coffee by name</li></ol>"
+      <li>/search - search for a coffee by name</li></ul>";
 
       res.status(200).send(result);
     });
