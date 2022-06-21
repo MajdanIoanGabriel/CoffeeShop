@@ -1,9 +1,9 @@
 version: '2'
 services:
-  coffee_shop:
-    image: majdangabriel/coffee_shop
-    build: ./coffee_shop
-    container_name: coffee_shop
+  coffee_menu:
+    image: majdangabriel/coffee_menu
+    build: ./coffee_menu
+    container_name: coffee_menu
     ports:
      - "8080:8080"
     links:
@@ -23,11 +23,11 @@ services:
     ports:
      - "8081:8081"
     links:
-     - coffee_cart_db:coffee_cart_db
+     - coffee_order_db:coffee_order_db
     depends_on:
-     - coffee_cart_db
+     - coffee_order_db
     environment:
-     - DATABASE_HOST=coffee_cart_db
-  coffee_cart_db:
-    image: majdangabriel/coffee_cart_db
-    build: ./coffee_cart_db
+     - DATABASE_HOST=coffee_order_db
+  coffee_order_db:
+    image: majdangabriel/coffee_order_db
+    build: ./coffee_order_db

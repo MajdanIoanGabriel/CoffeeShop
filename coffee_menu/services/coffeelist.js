@@ -8,11 +8,11 @@
 module.exports = (app, options) => {
 
   app.get('/coffeelist', (req, res, next) => {
-    options.repository.getCoffeeList().then((coffelist) => {
-      var category = coffelist[0].category;
+    options.repository.getCoffeeList().then((coffeelist) => {
+      var category = coffeelist[0].category;
       var result = category + '\n<ol>'
 
-      for(const coffee of coffelist) {
+      for(const coffee of coffeelist) {
         if(!(category === coffee.category)) {
           category = coffee.category;
           result += '</ol><p>' + category + '</p><ol>';
