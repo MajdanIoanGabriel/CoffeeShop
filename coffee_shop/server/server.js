@@ -1,6 +1,7 @@
 //  server.js
 
 var express = require('express');
+var expr_proxy = require('express-http-proxy');
 var morgan = require('morgan');
 
 module.exports.start = (options) => {
@@ -15,12 +16,8 @@ module.exports.start = (options) => {
     app.use(morgan('dev'));
 
     //  Add the APIs to the app.
-    require('../services/coffeelist')(app, options);
-    require('../services/search')(app, options);
-    require('../services/coffeecart')(app, options);
-    require('../services/addtocart')(app, options);
-    require('../services/removefromcart')(app, options);
-    require('../services/totalprice')(app, options);
+    app.use('/menu', expr_proxy('coffee_menu:8080'));
+    app.use('/order', expr_proxy('coffee_order:8081'));
 
     //  Start the app, creating a running server which we return.
     var server = app.listen(options.port, () => {
