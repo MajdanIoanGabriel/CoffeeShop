@@ -19,6 +19,14 @@ module.exports.start = (options) => {
     app.use('/menu', expr_proxy('coffee_menu:8080'));
     app.use('/order', expr_proxy('coffee_order:8081'));
 
+    app.get('/', (req, res, next) => {
+      var result = "Welcome to the coffee shop. Here you can go to:<ul> \
+      <li>/menu - see the coffee menu</li> \
+      <li>/order - order some coffee</li>"
+
+      res.status(200).send(result);
+    });
+
     //  Start the app, creating a running server which we return.
     var server = app.listen(options.port, () => {
       resolve(server);
